@@ -1,0 +1,19 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Edit Question - {{ block.super }} {% endblock %}
+
+{% block content %}
+
+{% include "question_form.tmpl" %}
+
+{% endblock %}
+
+{% block extra_foot %}
+<script type="text/javascript">
+    $("#id_tags").tagit({
+        "autocomplete": {
+            "source": "/tags_ajax"
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Users - {{ block.super }} {% endblock %}
+{% block nav-users %} class="active" {% endblock %}
+
+{% block content %}
+
+<div class="row"><div class="span12">
+  <table class="table table-striped">
+    <tr>
+      <th>Email</td>
+      <th>Questions Submitted</td>
+    </tr>
+    {% for email, count in counts %}
+      <tr>
+        <td>{{email}}</td>
+        <td>{{count}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div></div>
+
+{% endblock %}

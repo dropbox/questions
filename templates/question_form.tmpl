@@ -1,0 +1,27 @@
+<form method="post" action="">{% csrf_token %}
+  <table class="table">
+    <tr>
+        <th><label for="id_title">Title:</label></th>
+        <td colspan="3">{{ form.title.errors }}{{ form.title }}</td>
+    </tr>
+    <tr>
+        <th><label for="id_tags">Tags:</label></th>
+        <td colspan="3">{{ form.tags.errors }}{{ form.tags }}</td>
+    </tr>
+    <tr>
+        <th><label for="id_difficulty">Difficulty:</label></th>
+        <td>{{ form.difficulty.errors }}{{ form.difficulty }}</td>
+    </tr>
+    <tr>
+        <td><label for="id_groups">Groups:</label></td>
+        <td>{{ form.groups.errors }}{{ form.groups }}</td>
+    </tr>
+    <tr>
+        <th><label for="id_body">Body:</label></th>
+        <td colspan="3">{{ form.body.errors }}{{ form.body }}</textarea>
+        <div><a href="/help" target="_blank">formatting help</a></div>
+        </td>
+    </tr>
+  </table>
+  <input class="btn btn-primary" type="submit" value="Submit">
+</form>

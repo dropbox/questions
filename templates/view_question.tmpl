@@ -1,0 +1,147 @@
+{% extends "base.tmpl" %}
+{% load comments %}
+{% load markdown_deux_tags %}
+
+{% block title %} Question - {{ block.super }} {% endblock %}
+
+{% block extra_head %}
+    {% if settings.syntax_highlighting %}
+        <link href="{{STATIC_URL}}css/pygments.css" rel="stylesheet">
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="span4">
+      <div class="btn-group">
+        {% if question.status == "Pending" %}
+          <button class="btn btn-warning disabled" type="button"><i class="icon-refresh"></i></button>
+        {% else %}
+          <a class="btn btn-warning" href="/question/{{question.id}}/status/Pending"><i class="icon-refresh"></i></a>
+        {% endif %}
+
+        {% if question.status == "Approved" %}
+          <button class="btn btn-success disabled" type="button"><i class="icon-ok"></i></button>
+        {% else %}
+          <a class="btn btn-success" href="/question/{{question.id}}/status/Approved"><i class="icon-ok"></i></a>
+        {% endif %}
+
+        {% if question.status == "Banned" %}
+          <button class="btn btn-danger disabled" type="button"><i class="icon-remove"></i></button>
+        {% else %}
+          <a class="btn btn-danger" href="/question/{{question.id}}/status/Banned"><i class="icon-remove"></i></a>
+        {% endif %}
+      </div>
+  </div>
+  <div class="span8" align="right">
+    {% if not active_revision %}
+      <a href="/question/{{question.id}}/set_revision/{{revision.id}}" class="btn btn-small btn-info"><i class="icon-ok"></i> Mark Active</a>
+    {% endif %}
+    <a href="/question/{{question.id}}/revisions" class="btn btn-small btn-info"><i class="icon-list"></i> View Revisions</a>
+    <a href="/question/{{question.id}}/edit" class="btn btn-small btn-primary"><i class="icon-edit"></i> Edit Question</a>
+    {% if user.is_staff or user.email == question.added_by.email %}
+      <a href="#delete-modal" role="button" class="btn btn-small btn-danger" data-toggle="modal"><i class="icon-remove"></i> Delete Question</a>
+
+      <div id="delete-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="delete-modal-label" aria-hidden="true">
+        <div class="modal-header" align="left">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="delete-modal-label">Delete Question</h3>
+        </div>
+        <div class="modal-body" align="left">
+          <p>Are you sure you want to delete this question?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          <a href="/question/{{question.id}}/delete" class="btn btn-small btn-danger"><i class="icon-remove"></i> Delete Question</a>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% if not active_revision or question.status != "Active" %}
+  <div>&nbsp;</div>
+{% endif %}
+{% if not active_revision %}
+  <div class="alert alert-info">
+   You are currently viewing a non-active revision.
+  </div>
+{% endif %}
+{% if question.status == "Pending" %}
+  <div class="alert alert-warning">
+   This question is pending. If used in an interview discuss its signal before approving.
+  </div>
+{% endif %}
+{% if question.status == "Banned" %}
+  <div class="alert alert-error">
+   This question is banned. Don't use it in future interviews.
+  </div>
+{% endif %}
+
+<h2>{{question.title}}</h2>
+<div class="row">
+  <div class="span2"><b>Difficulty</b></div>
+  <div class="span3">{{question.difficulty}}</div>
+  <div class="span1"><b>Status</b></div>
+  <div class="span3">{{question.status}}</div>
+  <div class="span1"><b>Groups</b></div>
+  <div class="span2">{{question.groups.all|join:", "}}</div>
+</div>
+<div class="row">
+  <div class="span2"><b>Added By</b></div>
+  <div class="span3">{{question.added_by.email}}</div>
+  <div class="span1"><b>On</b></div>
+  <div class="span3">{{question.date_added}}</div>
+</div>
+<div class="row">
+  <div class="span2"><b>Modified By</b></div>
+  <div class="span3">{{revision.user.email}}</div>
+  <div class="span1"><b>On</b></div>
+  <div class="span3">{{revision.date_added}}</div>
+</div>
+<div class="row">
+  <div class="span2"><b>Tags</b></div>
+  <div class="span10">
+    {% for tag in question.tag_list %}<a href="/tag/{{tag}}"><span class="label">{{tag}}</span></a>&nbsp;{% endfor %}
+  </div>
+</div>
+<div class="span12">&nbsp;</div>
+<div class="row">
+  <div class="span12">
+    {{revision.text|markdown}}
+  </div>
+</div>
+
+<div class="span2">&nbsp;</div>
+
+<div class="row"><div class="span12">
+{% get_comment_form for question as form %}
+  <form action="{% comment_form_target %}" method="POST">
+      {% csrf_token %}
+      {{ form.comment }}
+      <span style="display: none;">{{ form.honeypot }}</span>
+      {{ form.content_type }}
+      {{ form.object_pk }}
+      {{ form.timestamp }}
+      {{ form.security_hash }}
+      <input type="hidden" name="next" value="/question/{{question.id}}" />
+      <input class="btn btn-primary" type="submit" value="Add comment" id="id_submit" />
+  </form>
+</div></div>
+
+{% get_comment_list for question as comment_list %}
+{% for comment in comment_list %}
+
+  <div class="row">
+    <div class="span12">{{comment.submit_date}} - <b>{{comment.user_email}}</b> says:</div>
+  </div>
+  <div class="row">
+    <div class="span10"><pre>{{comment.comment}}</pre></div>
+    <div class="span2">&nbsp;</div>
+  </div>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Add Group - {{ block.super }} {% endblock %}
+
+{% block content %}
+<form method="post" action="">{% csrf_token %}
+  <table class="table">
+    {{form.as_table}}
+  </table>
+  <input class="btn btn-primary" type="submit" value="Submit">
+</form>
+{% endblock %}

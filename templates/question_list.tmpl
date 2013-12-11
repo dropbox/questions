@@ -1,0 +1,63 @@
+<table class="table table-striped">
+ <tr>
+   <th>Title</th>
+   {% if not settings.group %}
+   <th>Groups</th>
+   {% endif %}
+   <th>Difficulty</th>
+   <th>Tags</th>
+ </tr>
+ </tr>
+  <th colspan="5">Approved</th>
+ </tr>
+{% for question in approved_questions %}
+  <tr>
+    <td><span title="{{question.title}}"><a href="/question/{{question.id}}">{{question.title|truncatechars:80}}</a></span></td>
+    {% if not settings.group %}
+      <td>{{question.groups.all|join:", "}}</td>
+    {% endif %}
+    <td>{{question.difficulty}}</td>
+    <td>
+      {% for tag in question.tag_list %}
+        <a href="/tag/{{tag}}"><span class="label">{{tag}}</span></a>
+      {% endfor %}
+    </td>
+  </tr>
+{% endfor %}
+
+ </tr>
+  <th colspan="5">Pending</th>
+ </tr>
+{% for question in pending_questions %}
+  <tr>
+    <td><span title="{{question.title}}"><a href="/question/{{question.id}}">{{question.title|truncatechars:80}}</a></span></td>
+    {% if not settings.group %}
+      <td>{{question.groups.all|join:", "}}</td>
+    {% endif %}
+    <td>{{question.difficulty}}</td>
+    <td>
+      {% for tag in question.tag_list %}
+        <a href="/tag/{{tag}}"><span class="label">{{tag}}</span></a>
+      {% endfor %}
+    </td>
+  </tr>
+{% endfor %}
+
+ </tr>
+  <th colspan="5">Banned</th>
+ </tr>
+{% for question in banned_questions %}
+  <tr>
+    <td><span title="{{question.title}}"><a href="/question/{{question.id}}">{{question.title|truncatechars:80}}</a></span></td>
+    {% if not settings.group %}
+      <td>{{question.groups.all|join:", "}}</td>
+    {% endif %}
+    <td>{{question.difficulty}}</td>
+    <td>
+      {% for tag in question.tag_list %}
+        <a href="/tag/{{tag}}"><span class="label">{{tag}}</span></a>
+      {% endfor %}
+    </td>
+  </tr>
+{% endfor %}
+</table>

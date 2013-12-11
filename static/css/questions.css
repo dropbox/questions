@@ -1,0 +1,21 @@
+.container {
+    padding-top: 12px;
+}
+
+#id_title {
+    width: 700px;
+}
+
+#id_body {
+    width: 700px;
+    height: 400px;
+}
+
+#id_comment {
+    width: 700px;
+    height: 50px;
+}
+
+ul.tagit {
+    width: 700px;
+}

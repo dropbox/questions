@@ -1,0 +1,13 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Tag - {{ block.super }} {% endblock %}
+
+{% block content %}
+
+<span class="label"><h2>{{tagname}}</h2></span>
+
+<div>&nbsp;</div>
+<h3>Questions</h3>
+{% include "question_list.tmpl" %}
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Settings - {{ block.super }} {% endblock %}
+{% block nav-settings %} class="active" {% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="span12" align="right">
+    <a href="/settings/edit" class="btn btn-small btn-primary"><i class="icon-edit"></i> Edit Settings</a>
+  </div>
+</div>
+<div class="span12">&nbsp;</div>
+<div class="row"><div class="span12">
+  <table class="table table-striped">
+    <tr>
+      <th>Name</td>
+      <th>Value</td>
+    </tr>
+    <tr>
+      <td>Group Filter:</td>
+      {% if settings.group.all %}
+        <td><a href="/group/{{settings.group.id}}">{{settings.group}}</a></td>
+      {% else %}
+        <td>{{settings.group}}</td>
+      {% endif %}
+    </tr>
+    <tr>
+      <td>Syntax Highlighting:</td>
+        <td>{{settings.syntax_highlighting}}</td>
+    </tr>
+  </table>
+</div></div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Revisions - {{ block.super }} {% endblock %}
+
+{% block content %}
+
+<table class="table table-striped">
+ <tr>
+   <th>ID</th>
+   <th>Added By</th>
+   <th>Added On</th>
+ </tr>
+{% for revision in revisions %}
+  {% if revision.active %}
+  <tr class="info">
+  {% else %}
+  <tr>
+  {% endif %}
+    <td><a href="/question/{{question.id}}?revision_id={{revision.id}}">{{revision.id}}</a></td>
+    <td>{{revision.user.email}}</td>
+    <td>{{revision.date_added}}</td>
+  </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

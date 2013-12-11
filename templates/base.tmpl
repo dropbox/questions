@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %} Questions {% endblock %}</title>
+    <link href="{{STATIC_URL}}css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="{{STATIC_URL}}css/questions.css" rel="stylesheet" media="screen">
+    <link href="{{STATIC_URL}}css/custom-theme/jquery-ui-1.10.0.custom.css" rel="stylesheet">
+    <link href="{{STATIC_URL}}css/jquery.tagit.css" rel="stylesheet">
+    {% block extra_head %} {% endblock %}
+  </head>
+  <body>
+    {% block navigation %}
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="navbar">
+              <div class="navbar-inner">
+                <a class="brand" href="/">Questions</a>
+                  <ul class="nav">
+                    <li {% block nav-home %} {% endblock %} ><a href="/">Home</a></li>
+                    <li {% block nav-groups %} {% endblock %}><a href="/groups">Groups</a></li>
+                    <li {% block nav-settings %} {% endblock %}><a href="/settings">Settings</a></li>
+                    <li {% block nav-users %} {% endblock %}><a href="/users">Users</a></li>
+                    <li {% block nav-help %} {% endblock %}><a href="/help">Help</a></li>
+                  </ul>
+                  <ul class="nav pull-right">
+                    <li><a href="/settings">{{user.email}}</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+        </div>
+      {% endblock %}
+      <div class="row">
+        <div class="span12">
+          {% block content %} {% endblock %}
+        </div>
+      </div>
+    </div>
+    <script src="/static/js/jquery-1.9.0.min.js"></script>
+    <script src="/static/js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/tag-it.min.js"></script>
+    <script src="/static/js/questions.js"></script>
+    {% block extra_foot %} {% endblock %}
+  </body>
+</html>

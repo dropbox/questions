@@ -1,0 +1,19 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Login Failed - {{ block.super }} {% endblock %}
+
+{# Clear Navigation for login failure #}
+{% block navigation %} {% endblock %}
+
+{% block content %}
+
+<div class="span12"> &nbsp; </div>
+<div class="alert alert-error span10 offset1">
+Failure to login. This likely occured because you're logged into a Google Account not on one of the following domains:
+  <ul>
+    {% for domain in allowed_domains %}
+    <li>{{domain}}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

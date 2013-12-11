@@ -1,0 +1,28 @@
+{% extends "base.tmpl" %}
+
+{% block title %} Groups - {{ block.super }} {% endblock %}
+{% block nav-groups %} class="active" {% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+  <div class="span12" align="right">
+    <a href="/group/add" class="btn btn-small btn-primary"><i class="icon-plus"></i> Add Group</a>
+  </div>
+</div>
+<div class="span12">&nbsp;</div>
+
+<table class="table table-striped">
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+{% for group in groups %}
+  <tr>
+    <td><a href="/group/{{group.id}}">{{group.name}}</a></td>
+    <td>{{group.description}}</td>
+  </tr>
+{% endfor %}
+</table>
+{% endblock %}
